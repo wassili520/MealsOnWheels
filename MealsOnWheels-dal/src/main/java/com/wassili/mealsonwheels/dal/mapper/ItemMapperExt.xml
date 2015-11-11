@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wassili.mealsonwheels.dal.mapper.ItemMapperExt">
+	<resultMap id="BaseResultMap" type="com.wassili.mealsonwheels.dal.model.Item">
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="MENU_ID" property="menuId" jdbcType="INTEGER"/>
+		<result column="ITEM_TYPE" property="itemType" jdbcType="INTEGER"/>
+		<result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR"/>
+		<result column="ITEM_IMAGE_URL" property="itemImageUrl"
+			jdbcType="VARCHAR"/>
+		<result column="ITEM_PRICE" property="itemPrice" jdbcType="INTEGER"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, MENU_ID, ITEM_TYPE, ITEM_NAME, ITEM_IMAGE_URL,
+		ITEM_PRICE
+	</sql>
+	<select id="queryItem" resultMap="BaseResultMap" parameterType="com.wassili.mealsonwheels.dal.model.Item">
+		select 
+		<include refid="Base_Column_List"/>
+		from ITEM
+		where 
+			MENU_ID = #{menuId,jdbcType=INTEGER}
+			and ITEM_TYPE = #{itemType,jdbcType=INTEGER}
+	</select>
+</mapper>

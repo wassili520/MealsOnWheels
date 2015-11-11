@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- in java cmd add -Dlog4j.configuration=logging.xml -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="log.file" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/logs/ordering/ordering.log"/>
+		<param name="Encoding" value="UTF-8"/>
+		<param name="Append" value="true"/>
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss SSS} [%-5p] %t(%c:%L) - %m%n"/>
+		</layout>
+	</appender>
+	<appender name="log.console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss SSS} [%-5p] %t(%c:%L) - %m%n"/>
+		</layout>
+	</appender>
+
+	<logger name="org.springframework" additivity="true">
+		<level value="WARN"/>
+	</logger>
+	<logger name="com.ibatis" additivity="true">
+		<level value="WARN"/>
+	</logger>
+	<logger name="org.hibernate" additivity="true">
+		<level value="WARN"/>
+	</logger>
+	<logger name="org.apache.activemq" additivity="true">
+		<level value="WARN"/>
+	</logger>
+
+	<root>
+		<level value="INFO"/>
+		<appender-ref ref="log.file"/>
+		<appender-ref ref="log.console"/>
+	</root>
+</log4j:configuration>
