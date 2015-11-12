@@ -20,6 +20,8 @@
 		from ITEM
 		where 
 			MENU_ID = #{menuId,jdbcType=INTEGER}
+			<if test="itemType != null and itemType != '' ">
 			and ITEM_TYPE = #{itemType,jdbcType=INTEGER}
+			</if>
 	</select>
 </mapper>
