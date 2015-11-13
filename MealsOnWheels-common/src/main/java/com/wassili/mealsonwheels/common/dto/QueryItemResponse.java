@@ -1,10 +1,12 @@
 package com.wassili.mealsonwheels.common.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.wassili.mealsonwheels.dal.model.Item;
+import com.wassili.mealsonwheels.web.controller.dto.BaseResponse;
 
-public class QueryItemResponse extends BaseResponse {
+public class QueryItemResponse extends BaseResponse implements Serializable{
 
 	/**
 	 * 

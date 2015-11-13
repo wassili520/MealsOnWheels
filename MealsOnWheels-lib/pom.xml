@@ -7,23 +7,17 @@
     <artifactId>MealsOnWheels</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>MealsOnWheels-common</artifactId>
-  <name>MealsOnWheels-common</name>
+  <artifactId>MealsOnWheels-lib</artifactId>
+  <name>MealsOnWheels-lib</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
-  		<dependency>
-			<groupId>com.wassili</groupId>
-			<artifactId>MealsOnWheels-lib</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-    	<dependency>
-			<groupId>com.wassili</groupId>
-			<artifactId>MealsOnWheels-dal</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
+    <dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>fastjson</artifactId>
+	</dependency>
+
   </dependencies>
 </project>

@@ -1,5 +1,7 @@
 package com.wassili.mealsonwheels.rt.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,12 @@ import com.alibaba.fastjson.JSON;
 import com.wassili.mealsonwheels.common.dto.QueryItemRequest;
 import com.wassili.mealsonwheels.common.dto.QueryItemResponse;
 import com.wassili.mealsonwheels.service.ItemService;
+import com.wassili.mealsonwheels.web.controller.GenericController;
 
 @Controller
 @RequestMapping("menu")
 public class QueryItemController extends
-		AbstractController<QueryItemRequest, QueryItemResponse>{
+		GenericController<QueryItemRequest, QueryItemResponse>{
 
 	private static Logger logger = LoggerFactory.getLogger(QueryItemController.class);
 
@@ -25,33 +28,79 @@ public class QueryItemController extends
 	@Autowired
 	private ItemService itemService;
 	
-	@Override
+	
 	@RequestMapping(value="/queryItem", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public @ResponseBody 
-	String entry(@RequestBody QueryItemRequest req) {
+	String queryItem(@RequestBody QueryItemRequest req) {
 		logger.info("queryItem request:{}",JSON.toJSONString(req, true));
 		
 		QueryItemResponse resp = new QueryItemResponse();
 		
-		resp = itemService.queryItem(req);
+		String responseStr = this.invoke(req, resp);
 		
-		String response = this.execute(req, resp);
+//		resp = itemService.queryItem(req);
+//		
+//		String response = this.execute(req, resp);
 		
-		logger.info("queryItem response:{}", response);
+		logger.info("queryItem response:{}", responseStr);
 		
-		return response;
+		return responseStr;
+	}
+
+//	@Override
+//	public String handleRequest(QueryItemRequest request,
+//			QueryItemResponse response) {
+//		return null;
+//	}
+//
+//	@Override
+//	public String handleResponse(QueryItemRequest request,
+//			QueryItemResponse response) {
+//		return JSON.toJSONString(response, true);
+//	}
+
+	@Override
+	public QueryItemResponse execute(QueryItemRequest req,
+			QueryItemResponse resp) {
+		try {
+			if (validateParam(req, resp)) {
+				resp = itemService.queryItem(req);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return resp;
 	}
 
 	@Override
-	public String handleRequest(QueryItemRequest request,
-			QueryItemResponse response) {
+	public void handleCommonRequestParams(QueryItemRequest req,
+			QueryItemResponse resp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean validateParam(QueryItemRequest req, QueryItemResponse resp) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public Map<String, String> getExtendsDataMap(QueryItemRequest req) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String handleResponse(QueryItemRequest request,
-			QueryItemResponse response) {
-		return JSON.toJSONString(response, true);
+	public String getSecretKey(QueryItemRequest req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addResSign(QueryItemRequest req, QueryItemResponse res) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

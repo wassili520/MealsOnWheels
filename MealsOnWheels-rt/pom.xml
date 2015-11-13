@@ -51,6 +51,11 @@
 	
 	<dependencies>
   		<!-- internal dependency -->
+  		<dependency>
+			<groupId>com.wassili</groupId>
+			<artifactId>MealsOnWheels-lib</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.wassili</groupId>
 			<artifactId>MealsOnWheels-service</artifactId>

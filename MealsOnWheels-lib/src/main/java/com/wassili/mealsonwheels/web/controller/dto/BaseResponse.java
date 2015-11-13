@@ -1,13 +1,11 @@
-package com.wassili.mealsonwheels.common.dto;
+package com.wassili.mealsonwheels.web.controller.dto;
 
-import java.io.Serializable;
-
-public class BaseResponse implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6180576107323159651L;
+/**
+ * 
+ * @author wassili
+ * @version $Id: BaseResponse.java
+ */
+public class BaseResponse {
 	
 	private String code;
 	private String message;
@@ -24,5 +22,5 @@ public class BaseResponse implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
 }

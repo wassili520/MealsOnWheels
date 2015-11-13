@@ -1,6 +1,10 @@
 package com.wassili.mealsonwheels.common.dto;
 
-public class QueryItemRequest extends BaseRequest {
+import java.io.Serializable;
+
+import com.wassili.mealsonwheels.web.controller.dto.BaseRequest;
+
+public class QueryItemRequest extends BaseRequest implements Serializable{
 
 	/**
 	 * 
