@@ -38,26 +38,10 @@ public class QueryItemController extends
 		
 		String responseStr = this.invoke(req, resp);
 		
-//		resp = itemService.queryItem(req);
-//		
-//		String response = this.execute(req, resp);
-		
 		logger.info("queryItem response:{}", responseStr);
 		
 		return responseStr;
 	}
-
-//	@Override
-//	public String handleRequest(QueryItemRequest request,
-//			QueryItemResponse response) {
-//		return null;
-//	}
-//
-//	@Override
-//	public String handleResponse(QueryItemRequest request,
-//			QueryItemResponse response) {
-//		return JSON.toJSONString(response, true);
-//	}
 
 	@Override
 	public QueryItemResponse execute(QueryItemRequest req,
