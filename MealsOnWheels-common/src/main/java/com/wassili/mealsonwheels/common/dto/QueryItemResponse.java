@@ -1,12 +1,16 @@
 package com.wassili.mealsonwheels.common.dto;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.wassili.mealsonwheels.dal.model.Item;
+import com.wassili.mealsonwheels.util.Signaturable;
 import com.wassili.mealsonwheels.web.controller.dto.BaseResponse;
 
-public class QueryItemResponse extends BaseResponse implements Serializable{
+public class QueryItemResponse extends BaseResponse implements Serializable, Signaturable{
 
 	/**
 	 * 
@@ -15,6 +19,18 @@ public class QueryItemResponse extends BaseResponse implements Serializable{
 	
 	private Integer recordCount;
 	private List<Item> result;
+	
+	@Override
+	public LinkedHashMap<String, String> signParmMap() {
+		LinkedHashMap<String, String> paramMap = new LinkedHashMap<String, String>();
+		paramMap.put("resultCode", resultCode);
+		paramMap.put("signType", signType);
+		paramMap.put("errCode", StringUtils.isBlank(errCode) ? "" : errCode);
+		paramMap.put("errMsg", StringUtils.isBlank(errMsg) ? "" : errMsg);
+		
+		
+		return paramMap;
+	}
 	
 	public Integer getRecordCount() {
 		return recordCount;
@@ -28,6 +44,7 @@ public class QueryItemResponse extends BaseResponse implements Serializable{
 	public void setResult(List<Item> result) {
 		this.result = result;
 	}
+	
 	
 
 }

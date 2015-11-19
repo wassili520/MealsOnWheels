@@ -1,5 +1,6 @@
 package com.wassili.mealsonwheels.rt.controller;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -15,6 +16,9 @@ import com.alibaba.fastjson.JSON;
 import com.wassili.mealsonwheels.common.dto.QueryItemRequest;
 import com.wassili.mealsonwheels.common.dto.QueryItemResponse;
 import com.wassili.mealsonwheels.service.ItemService;
+import com.wassili.mealsonwheels.util.MD5SignUtil;
+import com.wassili.mealsonwheels.web.constants.BaseConstants;
+import com.wassili.mealsonwheels.web.constants.CodeConstants;
 import com.wassili.mealsonwheels.web.controller.GenericController;
 
 @Controller
@@ -51,7 +55,8 @@ public class QueryItemController extends
 				resp = itemService.queryItem(req);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			resp.setErrCode(CodeConstants.UNKNOWN_ERROR);
+			logger.error("", e);
 		}
 		return resp;
 	}
@@ -59,20 +64,22 @@ public class QueryItemController extends
 	@Override
 	public void handleCommonRequestParams(QueryItemRequest req,
 			QueryItemResponse resp) {
-		// TODO Auto-generated method stub
-		
+		resp.setSignType(req.getSignType());
 	}
 
 	@Override
 	public boolean validateParam(QueryItemRequest req, QueryItemResponse resp) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public Map<String, String> getExtendsDataMap(QueryItemRequest req) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		String secretKey = "aaa";
+		map.put(BaseConstants.KEY, secretKey);
+		String signBody = MD5SignUtil.buildSignBody(req, req, secretKey);
+		map.put(BaseConstants.SIGN_BODY, signBody);
+		return map;
 	}
 
 	@Override
@@ -83,8 +90,9 @@ public class QueryItemController extends
 
 	@Override
 	public void addResSign(QueryItemRequest req, QueryItemResponse res) {
-		// TODO Auto-generated method stub
-		
+		String secretKey = "aa";
+		String respSignBody = MD5SignUtil.buildSignBody(res, res, secretKey);
+		res.setSignMsg(MD5SignUtil.getMySignMsg(respSignBody));
 	}
 
 	

@@ -1,5 +1,6 @@
 package com.wassili.mealsonwheels.rt.controller;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -11,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.wassili.mealsonwheels.common.dto.QueryMenuRequest;
 import com.wassili.mealsonwheels.common.dto.QueryMenuResponse;
 import com.wassili.mealsonwheels.service.MenuService;
+import com.wassili.mealsonwheels.util.MD5SignUtil;
+import com.wassili.mealsonwheels.web.constants.BaseConstants;
+import com.wassili.mealsonwheels.web.constants.CodeConstants;
 import com.wassili.mealsonwheels.web.controller.GenericController;
 
 @Controller
@@ -32,7 +36,7 @@ public class QueryMenuController extends
 	@RequestMapping(value="/queryMenu", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public @ResponseBody 
 	String queryMenu(@RequestBody QueryMenuRequest request) {
-		logger.info("queryMenu request:{}", JSONObject.toJSONString(request));
+		logger.info("queryMenu request:{}", JSON.toJSONString(request, true));
 		
 		QueryMenuResponse response = new QueryMenuResponse();
 		
@@ -52,7 +56,8 @@ public class QueryMenuController extends
 				resp = menuService.queryMenu(req);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			resp.setErrCode(CodeConstants.UNKNOWN_ERROR);
+			logger.error("", e);
 		}
 		return resp;
 	}
@@ -61,7 +66,7 @@ public class QueryMenuController extends
 	@Override
 	public void handleCommonRequestParams(QueryMenuRequest req,
 			QueryMenuResponse resp) {
-		// TODO Auto-generated method stub
+		resp.setSignType(req.getSignType());
 		
 	}
 
@@ -75,8 +80,12 @@ public class QueryMenuController extends
 
 	@Override
 	public Map<String, String> getExtendsDataMap(QueryMenuRequest req) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		String secretKey = "aa";
+		map.put(BaseConstants.KEY, secretKey);
+		String signBody = MD5SignUtil.buildSignBody(req, req, secretKey);
+		map.put(BaseConstants.SIGN_BODY, signBody);
+		return map;
 	}
 
 
@@ -89,8 +98,9 @@ public class QueryMenuController extends
 
 	@Override
 	public void addResSign(QueryMenuRequest req, QueryMenuResponse res) {
-		// TODO Auto-generated method stub
-		
+//		String secretKey = "aa";
+//		String respSignBody = MD5SignUtil.buildSignBody(res, res, secretKey);
+//		res.setSignMsg(MD5SignUtil.getMySignMsg(respSignBody));
 	}
 
 	
